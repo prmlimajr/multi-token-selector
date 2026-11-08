@@ -1,0 +1,17 @@
+{
+  "MTS": {
+    "Config": {
+      "duracaoMorph": {
+        "Nome": "Morph effect duration (ms)",
+        "Dica": "Transition time when switching the token image."
+      }
+    },
+    "Botao": "Actor tokens",
+    "Titulo": "{nome}'s tokens",
+    "Vazio": "No saved tokens. Add the current image or pick a file.",
+    "Remover": "Remove from list",
+    "AdicionarAtual": "Current",
+    "AdicionarArquivo": "File",
+    "SemPermissao": "You don't have permission to change this token."
+  }
+}

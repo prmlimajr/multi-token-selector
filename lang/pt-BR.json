@@ -1,0 +1,17 @@
+{
+  "MTS": {
+    "Config": {
+      "duracaoMorph": {
+        "Nome": "Duração do efeito morph (ms)",
+        "Dica": "Tempo da transição ao trocar a imagem do token."
+      }
+    },
+    "Botao": "Tokens do ator",
+    "Titulo": "Tokens de {nome}",
+    "Vazio": "Nenhum token salvo. Adicione a imagem atual ou escolha um arquivo.",
+    "Remover": "Remover da lista",
+    "AdicionarAtual": "Atual",
+    "AdicionarArquivo": "Arquivo",
+    "SemPermissao": "Você não tem permissão para alterar este token."
+  }
+}
