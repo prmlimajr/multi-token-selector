@@ -104,3 +104,19 @@
   opacity: 0.5;
   cursor: default;
 }
+
+/* Selo do token original (não removível) */
+.mts-selo {
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  font-size: 9px;
+  text-align: center;
+  border-radius: 50%;
+  background: #b8860b;
+  color: #fff;
+  pointer-events: none;
+}

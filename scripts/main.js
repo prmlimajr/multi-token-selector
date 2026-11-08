@@ -56,6 +56,15 @@ function transicaoMorph() {
 }
 
 /**
+ * Imagem original do token: a que ele tinha antes da primeira troca.
+ * Fica gravada numa flag do próprio token; enquanto não houve troca, é a imagem atual.
+ */
+export function imagemOriginal(token) {
+  const doc = token.document ?? token;
+  return doc.getFlag(MODULE_ID, "original") ?? doc.texture.src;
+}
+
+/**
  * Troca a imagem do token na cena com a transição morph.
  * As opções de animação vão junto com o update, então todos os clientes veem o efeito.
  */
@@ -64,7 +73,7 @@ export async function trocarImagem(token, src) {
   if (!doc.isOwner) return ui.notifications.warn(t("SemPermissao"));
   if (doc.texture.src === src) return;
   return doc.update(
-    { "texture.src": src },
+    { "texture.src": src, [`flags.${MODULE_ID}.original`]: imagemOriginal(doc) },
     { animation: { transition: transicaoMorph(), duration: game.settings.get(MODULE_ID, "duracaoMorph") } }
   );
 }
@@ -115,15 +124,19 @@ function abrirSeletorDeArquivo(ator, atual, depois) {
 
 function desenharPaleta(paleta, token) {
   const ator = atorBase(token);
-  const lista = listarImagens(ator);
   const atual = token.document.texture.src;
+  const original = imagemOriginal(token);
+  // O original é sempre o primeiro e não pode ser removido.
+  const lista = [
+    { src: original, nome: t("Original"), original: true },
+    ...listarImagens(ator).filter((i) => i.src !== original)
+  ];
   const redesenhar = () => desenharPaleta(paleta, token);
 
   paleta.replaceChildren();
   paleta.append(el("h4", "mts-titulo", t("Titulo", { nome: ator.name })));
 
   const grade = el("div", "mts-grade");
-  if (!lista.length) grade.append(el("p", "mts-vazio", t("Vazio")));
 
   for (const item of lista) {
     const cel = el("div", "mts-item" + (item.src === atual ? " ativo" : ""));
@@ -135,6 +148,14 @@ function desenharPaleta(paleta, token) {
       await trocarImagem(token, item.src);
       redesenhar();
     });
+
+    if (item.original) {
+      const selo = el("span", "mts-selo");
+      selo.innerHTML = `<i class="fa-solid fa-star"></i>`;
+      cel.append(selo);
+      grade.append(cel);
+      continue;
+    }
 
     const remover = el("a", "mts-remover");
     remover.innerHTML = `<i class="fa-solid fa-xmark"></i>`;
@@ -218,5 +239,5 @@ Hooks.once("init", () => {
 
 Hooks.once("setup", () => {
   const modulo = game.modules.get(MODULE_ID);
-  modulo.api = Object.assign(modulo.api ?? {}, { listarImagens, adicionarImagem, removerImagem, trocarImagem });
+  modulo.api = Object.assign(modulo.api ?? {}, { imagemOriginal, listarImagens, adicionarImagem, removerImagem, trocarImagem });
 });

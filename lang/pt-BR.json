@@ -8,10 +8,10 @@
     },
     "Botao": "Tokens do ator",
     "Titulo": "Tokens de {nome}",
-    "Vazio": "Nenhum token salvo. Adicione a imagem atual ou escolha um arquivo.",
     "Remover": "Remover da lista",
     "AdicionarAtual": "Atual",
     "AdicionarArquivo": "Arquivo",
-    "SemPermissao": "Você não tem permissão para alterar este token."
+    "SemPermissao": "Você não tem permissão para alterar este token.",
+    "Original": "Token original"
   }
 }
